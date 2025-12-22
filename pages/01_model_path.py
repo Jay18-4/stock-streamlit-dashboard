@@ -1,6 +1,6 @@
 import streamlit as st # type: ignore
 import pandas as pd
-from utils.api_client import get_latest_data, get_predictions, daily_cache
+from utils.api_client import read_csv, read_json, daily_cache
 
 
 st.set_page_config(page_title="Model Path", layout="wide")
@@ -8,8 +8,8 @@ st.set_page_config(page_title="Model Path", layout="wide")
 st.title("📈 Model Path Dashboard")
 
 # ---- Fetch data with daily caching ----
-latest_data = daily_cache("latest_data", get_latest_data)
-predictions = daily_cache("predictions", get_predictions)
+latest_data = daily_cache("latest_data", read_json("latest_data_snapshot.json"))
+predictions = daily_cache("predictions", read_csv("prediction_history.csv"))
 
 # ---- Convert stocks to DataFrame ----
 stocks_df = pd.DataFrame(latest_data["stocks"])
@@ -32,3 +32,4 @@ for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction']):
 # ---- Optional: Plot Close prices ----
 st.subheader("Stock Close Prices")
 st.line_chart(stocks_df.set_index("Ticker")["Close"])
+
