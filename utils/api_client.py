@@ -37,6 +37,9 @@ s3 = boto3.client(
     aws_secret_access_key=R2_SECRET_KEY
 )
 
+resp = s3.list_objects_v2(Bucket=R2_BUCKET_NAME)
+print(resp.get("Contents", []))
+
 def read_csv(file_name: str) -> pd.DataFrame:
     """Download CSV from R2 and return as DataFrame."""
     try:
@@ -59,6 +62,7 @@ def read_json(file_name: str):
     except botocore.exceptions.ClientError as e:
         print("S3 ERROR:", e.response["Error"])
         raise
+
 
 
 
