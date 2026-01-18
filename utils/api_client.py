@@ -52,8 +52,12 @@ def read_json(file_name: str):
     try:
         obj = s3.get_object(Bucket=R2_BUCKET_NAME, Key=f"data/{file_name}")
         return json.loads(obj['Body'].read().decode('utf-8'))
-    except s3.exceptions.NoSuchKey:
-        print(f"[WARN] File {file_name} not found in bucket. Returning empty dict.")
-        return {}
+    # except s3.exceptions.NoSuchKey:
+    #     print(f"[WARN] File {file_name} not found in bucket. Returning empty dict.")
+    #     return {}
+    except botocore.exceptions.ClientError as e:
+        print("S3 ERROR:", e.response["Error"])
+        raise
+
 
 
