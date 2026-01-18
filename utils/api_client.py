@@ -1,7 +1,6 @@
 import requests
 import streamlit as st # type: ignore
 from datetime import datetime
-import os
 import io
 import pandas as pd
 import boto3
@@ -24,10 +23,10 @@ def daily_cache(key, fetch_fn):
 # ---- API calls ----
 
 # Environment variables
-R2_BUCKET_NAME = os.getenv("R2_BUCKET_NAME")
-R2_ACCESS_KEY = os.getenv("R2_ACCESS_KEY")
-R2_SECRET_KEY = os.getenv("R2_SECRET_KEY")
-R2_ENDPOINT = os.getenv("R2_ENDPOINT")  # e.g., https://<account>.r2.cloudflarestorage.com
+R2_BUCKET_NAME = st.secrets["R2_BUCKET_NAME"]
+R2_ACCESS_KEY = st.secrets["R2_ACCESS_KEY"]
+R2_SECRET_KEY = st.secrets["R2_SECRET_KEY"]
+R2_ENDPOINT = st.secrets["R2_ENDPOINT"]
 
 # Initialize the client
 s3 = boto3.client(
@@ -56,4 +55,5 @@ def read_json(file_name: str):
     except s3.exceptions.NoSuchKey:
         print(f"[WARN] File {file_name} not found in bucket. Returning empty dict.")
         return {}
+
 
