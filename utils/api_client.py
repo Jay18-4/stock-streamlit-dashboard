@@ -8,7 +8,7 @@ import json
 import botocore
 
 # ---- Cache wrapper ----
-ddef daily_cloud_cache(key: str, fetch_fn):
+def daily_cloud_cache(key: str, fetch_fn):
     """
     Cache cloud-fetched data once per day in Streamlit session_state
     """
@@ -71,6 +71,7 @@ def read_json(file_name: str):
     except botocore.exceptions.ClientError as e:
         print("S3 ERROR:", e.response["Error"])
         raise
+
 
 
 
