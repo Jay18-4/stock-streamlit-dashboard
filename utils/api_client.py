@@ -7,8 +7,6 @@ import pandas as pd
 import boto3
 import json
 
-BASE_URL = "http://localhost:8000/api/v1"
-
 # ---- Cache wrapper ----
 def daily_cache(key, fetch_fn):
     cached = st.session_state.get(key, None)
@@ -48,12 +46,6 @@ def read_csv(file_name: str) -> pd.DataFrame:
         print(f"[WARN] File {file_name} not found in bucket. Returning empty DataFrame.")
         return pd.DataFrame()
 
-# def write_csv(df: pd.DataFrame, file_name: str):
-#     """Upload DataFrame to R2 as CSV."""
-#     csv_buffer = io.StringIO()
-#     df.to_csv(csv_buffer, index=False)
-#     s3.put_object(Bucket=R2_BUCKET_NAME, Key=f"data/{file_name}", Body=csv_buffer.getvalue())
-#     print(f"[INFO] File {file_name} uploaded to R2 bucket {R2_BUCKET_NAME}.")
 
 
 def read_json(file_name: str):
@@ -65,35 +57,3 @@ def read_json(file_name: str):
         print(f"[WARN] File {file_name} not found in bucket. Returning empty dict.")
         return {}
 
-# def write_json(data, file_name: str):
-#     """Upload a Python object as JSON to R2."""
-#     json_buffer = io.StringIO()
-#     json.dump(data, json_buffer)
-#     s3.put_object(Bucket=R2_BUCKET_NAME, Key=f"data/{file_name}", Body=json_buffer.getvalue())
-#     print(f"[INFO] File {file_name} uploaded to R2 bucket {R2_BUCKET_NAME}.")
-
-
-# def download_file(key: str, local_path: str):
-#     """
-#     Download any file (model, binary, etc.) from R2 to local disk
-#     """
-#     if os.path.exists(local_path):
-#         print(f"[INFO] {local_path} already exists. Skipping download.")
-#         return
-
-#     os.makedirs(os.path.dirname(local_path), exist_ok=True)
-
-#     with open(local_path, "wb") as f:
-#         s3.download_fileobj(R2_BUCKET_NAME, key, f)
-
-#     print(f"[INFO] Downloaded {key} -> {local_path}")
-
-
-# def upload_file(local_path: str, key: str):
-#     """
-#     Upload any file (model, binary, etc.) to R2
-#     """
-#     with open(local_path, "rb") as f:
-#         s3.upload_fileobj(f, R2_BUCKET_NAME, key)
-
-#     print(f"[INFO] Uploaded {local_path} -> {key}")
