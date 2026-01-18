@@ -1,6 +1,6 @@
 import streamlit as st  # type: ignore
 import pandas as pd
-from utils.api_client import daily_cache, read_json, read_csv
+from utils.api_client import daily_cloud_cache, read_json, read_csv
 
 # =========================
 # PAGE CONFIG
@@ -33,8 +33,14 @@ tab_overview, tab_features, tab_history = st.tabs(
 # =========================
 # FETCH DATA (CACHED)
 # =========================
-latest_data = daily_cache("latest_data_features", read_json("latest_data_feat.json"))
-history_data = daily_cache("prediction_history", read_json("prediction_history.csv"))
+latest_data = daily_cloud_cache(
+    "latest_data_features",
+    lambda: read_json("latest_data_feat.json")
+)
+history_data = daily_cloud_cache(
+    "prediction_history",
+    lambda: read_json("prediction_history.csv")
+)
 
 # =========================
 # TAB 1: OVERVIEW
@@ -106,4 +112,5 @@ st.markdown(
 - This page helps detect drift and instability
 """
 )
+
 
