@@ -8,17 +8,26 @@ import json
 import botocore
 
 # ---- Cache wrapper ----
-def daily_cache(key, fetch_fn):
-    cached = st.session_state.get(key, None)
-    last_fetch = st.session_state.get(f"{key}_time", None)
-    today = datetime.today().date()
+ddef daily_cloud_cache(key: str, fetch_fn):
+    """
+    Cache cloud-fetched data once per day in Streamlit session_state
+    """
+    today = date.today()
 
-    if cached and last_fetch == today:
+    cached = st.session_state.get(key)
+    cached_date = st.session_state.get(f"{key}__date")
+
+    # Return cached if already fetched today
+    if cached is not None and cached_date == today:
         return cached
 
+    # Fetch fresh from cloud
     data = fetch_fn()
+
+    # Store in session
     st.session_state[key] = data
-    st.session_state[f"{key}_time"] = today
+    st.session_state[f"{key}__date"] = today
+
     return data
 
 # ---- API calls ----
@@ -62,6 +71,7 @@ def read_json(file_name: str):
     except botocore.exceptions.ClientError as e:
         print("S3 ERROR:", e.response["Error"])
         raise
+
 
 
 
