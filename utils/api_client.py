@@ -5,6 +5,7 @@ import io
 import pandas as pd
 import boto3
 import json
+import botocore
 
 # ---- Cache wrapper ----
 def daily_cache(key, fetch_fn):
@@ -58,6 +59,7 @@ def read_json(file_name: str):
     except botocore.exceptions.ClientError as e:
         print("S3 ERROR:", e.response["Error"])
         raise
+
 
 
 
