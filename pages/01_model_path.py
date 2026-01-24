@@ -38,13 +38,14 @@ st.subheader("Latest Stock Snapshot + Predictions")
 st.dataframe(merged_df)
 
 st.subheader("Predictions") 
-for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction'].tail(4):
+for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction'].tail(4)):
     st.metric(f"{ticker} Direction", "Up" if pred == 1 else "Down")   
 
             
 # ---- Optional: Plot Close prices ----
 st.subheader("Stock Close Prices")
 st.line_chart(stocks_df.set_index("Ticker")["Close"])
+
 
 
 
