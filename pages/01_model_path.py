@@ -16,7 +16,7 @@ predictions = daily_cloud_cache(
     "predictions",
     lambda: read_csv("prediction_history.csv")
 )
-
+predictions = predictions.tail(4)
 # ---- Convert stocks to DataFrame ----
 stocks_df = pd.DataFrame(latest_data["stock"])
 # pred_df = predictions.sort_values("date").groupby("ticker", as_index=False).last()
@@ -35,16 +35,17 @@ pred_df = pd.DataFrame({
 merged_df = stocks_df.merge(pred_df, on="Ticker", how="left")
 
 st.subheader("Latest Stock Snapshot + Predictions")
-st.dataframe(merged_df.tail(4))
+st.dataframe(merged_df)
 
 st.subheader("Predictions") 
-for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction'].tail(4)):
+for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction']):
     st.metric(f"{ticker} Direction", "Up" if pred == 1 else "Down")   
 
             
 # ---- Optional: Plot Close prices ----
 st.subheader("Stock Close Prices")
 st.line_chart(stocks_df.set_index("Ticker")["Close"])
+
 
 
 
