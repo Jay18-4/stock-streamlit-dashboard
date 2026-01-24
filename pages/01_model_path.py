@@ -35,7 +35,7 @@ pred_df = pd.DataFrame({
 merged_df = stocks_df.merge(pred_df, on="Ticker", how="left")
 
 st.subheader("Latest Stock Snapshot + Predictions")
-st.dataframe(merged_df)
+st.dataframe(merged_df.tail(4))
 
 st.subheader("Predictions") 
 for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction'].tail(4)):
@@ -45,6 +45,7 @@ for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction'].tail(4)):
 # ---- Optional: Plot Close prices ----
 st.subheader("Stock Close Prices")
 st.line_chart(stocks_df.set_index("Ticker")["Close"])
+
 
 
 
