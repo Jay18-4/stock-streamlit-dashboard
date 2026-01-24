@@ -92,7 +92,7 @@ with tab_history:
             st.divider()
             # Optional: directional trend visualization
             history_df["prediction_numeric"] = history_df["prediction"].map({1: 1, 0: 0})
-            st.line_chart(history_df.set_index("timestamp")["prediction_numeric"])
+            st.line_chart(history_df.set_index("prediction_timestamp")["prediction_numeric"])
         else:
             st.info("Prediction history is empty.")
     except Exception as e:
@@ -112,6 +112,7 @@ st.markdown(
 - This page helps detect drift and instability
 """
 )
+
 
 
 
