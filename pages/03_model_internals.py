@@ -39,7 +39,7 @@ latest_data = daily_cloud_cache(
 )
 history_data = daily_cloud_cache(
     "prediction_history",
-    lambda: read_json("prediction_history.csv")
+    lambda: read_csv("prediction_history.csv")
 )
 
 # =========================
@@ -112,5 +112,6 @@ st.markdown(
 - This page helps detect drift and instability
 """
 )
+
 
 
