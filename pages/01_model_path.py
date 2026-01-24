@@ -14,7 +14,7 @@ latest_data = daily_cloud_cache(
 )
 predictions = daily_cloud_cache(
     "predictions",
-    read_json("prediction_history.csv")
+    lambda: read_csv("prediction_history.csv")
 )
 
 # ---- Convert stocks to DataFrame ----
@@ -38,6 +38,7 @@ for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction']):
 # ---- Optional: Plot Close prices ----
 st.subheader("Stock Close Prices")
 st.line_chart(stocks_df.set_index("Ticker")["Close"])
+
 
 
 
