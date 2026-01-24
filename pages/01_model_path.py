@@ -19,7 +19,7 @@ predictions = daily_cloud_cache(
 
 # ---- Convert stocks to DataFrame ----
 stocks_df = pd.DataFrame(latest_data["stock"])
-pred_df = predictions.sort_values("date").groupby("ticker", as_index=False).last()
+# pred_df = predictions.sort_values("date").groupby("ticker", as_index=False).last()
 
 pred_df = pred_df.rename(columns={
     "ticker": "Ticker",
@@ -41,6 +41,7 @@ for ticker,pred in zip(merged_df['Ticker'], merged_df['Prediction']):
 # ---- Optional: Plot Close prices ----
 st.subheader("Stock Close Prices")
 st.line_chart(stocks_df.set_index("Ticker")["Close"])
+
 
 
 
