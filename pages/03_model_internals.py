@@ -48,7 +48,7 @@ history_data = daily_cloud_cache(
 with tab_overview:
     st.subheader("Model Metadata")
     st.metric("Model Version", history_data["model_version"].iloc[-1])
-    st.metric("Last Updated", latest_data.get("timestamp", "N/A"))
+    st.metric("Last Updated", latest_data.get("prediction_timestamp", "N/A"))
 
 
 # =========================
@@ -112,6 +112,7 @@ st.markdown(
 - This page helps detect drift and instability
 """
 )
+
 
 
 
