@@ -21,9 +21,13 @@ predictions = daily_cloud_cache(
 stocks_df = pd.DataFrame(latest_data["stock"])
 # pred_df = predictions.sort_values("date").groupby("ticker", as_index=False).last()
 
-pred_df = pred_df.rename(columns={
-    "ticker": "Ticker",
-    "prediction": "Prediction"
+# pred_df = pred_df.rename(columns={
+#     "ticker": "Ticker",
+#     "prediction": "Prediction"
+# })
+pred_df = pd.DataFrame({
+    "Ticker": predictions["ticker"],
+    "Prediction": predictions["prediction"]
 })
 
 
