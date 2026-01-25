@@ -82,8 +82,8 @@ with tab_history:
         history_df = history_df.drop(columns=["model_version"])
         if not history_df.empty:
             if selected_ticker != "All":
-                history_df = history_df[history_df["tickers"] == selected_ticker]
-                history_df = history_df.drop(columns=["tickers"])
+                history_df = history_df[history_df["ticker"] == selected_ticker]
+                history_df = history_df.drop(columns=["ticker"])
             
                 
             history_df['direction'] = ['Up' if i == 1 else 'Down' for i in history_df['prediction']]
@@ -112,6 +112,7 @@ st.markdown(
 - This page helps detect drift and instability
 """
 )
+
 
 
 
